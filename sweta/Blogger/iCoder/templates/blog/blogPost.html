@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} Blogpost{% endblock title %}
+
+{% block body %}
+<div class="container my-3">
+<div class="blog-post">
+        <h2 class="blog-post-title">{{post.title}}</h2>
+        <p class="blog-post-meta">{{post.timeStamp}} by <a href="#">{{post.author}}</a></p>
+
+        <p>{{post.content|safe}}</p>
+        <hr>
+</div>
+</div>
+<div class="container">
+        <h2>Comments</h2>
+        <form action="/blog/postComment" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+                <label for="exampleInputEmail1">Post Comment</label>
+                <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+        </div>
+        <input type="hidden" name="postSno" value="{{post.sno}}">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+        {% for comment in comments %}
+
+        <div class="row my-3">
+                <div class="col md-1 bg-success">Image here</div>
+                <div class="col md-11 bg-primary"><b>{{comment.user.username}}</b>{{comment.comment}}</div>
+        </div>
+
+        {% endfor %}
+<div>
+ {% endblock %}
